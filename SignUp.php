@@ -19,7 +19,8 @@ try
         //exit;  
     }
     else{
-    	echo $stmt->errorCode()."Sorry! there was an internal error";
+    	$error=$stmt->errorInfo();
+    	echo $error[2]."Sorry! Please correct the error";//add danger alert for this.-Faraz
     	//header('location:SignUpI.php');
         //exit;
     }  
