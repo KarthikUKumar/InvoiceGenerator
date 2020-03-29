@@ -9,10 +9,10 @@ try
     $State=$_POST["State"];
     $Country=$_POST["Country"];
     $phone=$_POST["Phone"];
-    $pw="'".$_POST["pwd1"]."'";
+    $pw=$_POST["pwd1"];
     $sql="Insert into User_Detail (gstin_no,uemail,password,company,uaddress,ustate,ucountry,phone_no) values (?,?,?,?,?,?,?,?)";
     $stmt=$pdo->prepare($sql);
-    $stmt->execute([$gst,$email,sha1($pw),$company,$address,$State,$Country,$phone]);
+    $stmt->execute([$gst,$email,md5($pw),$company,$address,$State,$Country,$phone]);
     if($stmt->errorCode()==0){
     	echo "Inserted Successfully";
         //header('location:LoginPageI.php');
@@ -23,10 +23,10 @@ try
     	echo $error[2]."Sorry! Please correct the error";//add danger alert for this.-Faraz
     	//header('location:SignUpI.php');
         //exit;
-    }  
+    }       
 }
 catch(PDOException $e){
-	echo $e->getMessage();
+	echo "Connection Failed\n".$e->getMessage();
 	$pdo=null;
 }
 ?>
