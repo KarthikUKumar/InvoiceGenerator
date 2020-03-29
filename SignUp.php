@@ -5,7 +5,7 @@ try
 	$gst=$_POST["gstin"];
     $company=$_POST["company"];
     $email=$_POST["uemail"];
-    $address=$_POST["address"].$_POST["Address2"];
+    $address=$_POST["address"].",".$_POST["Address2"];
     $State=$_POST["State"];
     $Country=$_POST["Country"];
     $phone=$_POST["Phone"];
