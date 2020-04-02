@@ -3,45 +3,18 @@ session_start();
 ?>
 <HTML>
 <HEAD>
-    <TITLE>Invoice Generator</TITLE>
- <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style>
-.navy {
-    -webkit-box-shadow: 0 8px 6px -6px #999;
-    -moz-box-shadow: 0 8px 6px -6px #999;
-    box-shadow: 0 8px 6px -6px #999;
- 
-    /* the rest of your styling */
-}
-</style>
+    <TITLE>Invoice Generator - Add Item</TITLE>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <SCRIPT language="javascript" src="rowadd.js"></SCRIPT>
 </HEAD>
-<BODY>
- <nav class="navbar navbar-inverse navy" >
-  <div class="container-fluid" >
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">InvoiceGenerator</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-    </ul>
-  </div>
-</nav> 
-<center>
-   <h1>Welcome <? echo '$_SESSION["Company"]'; ?></h1>
+<BODY><center>
+   <h1>Welcome <?php echo $_SESSION['company']; ?></h1>
    <h4>Add Items</h4></center>
     <div class="container">
     <form id="form1" action="itemadd.php" method="post">
-    <TABLE id="dataTable" class="table table-striped table-hover order-list">
+    <TABLE id="dataTable" class="table order-list">
         <tr>
             <td class="col-sm-1"></td>
             <td class="col-sm-3">Name</td>
@@ -68,11 +41,11 @@ session_start();
     <div class="col-sm-1"></div>
     <INPUT type="button" value="Add Row +" onclick="addRow('dataTable')" class="btn btn-md btn btn-info col-sm-3">
     <div class="col-sm-1"></div>
-    <INPUT type="button" value="Delete Row -" onclick="deleteRow('dataTable')" class="btn btn-md btn btn-danger col-sm-3
-
-">
+    <INPUT type="button" value="Delete Row -" onclick="deleteRow('dataTable')" class="btn btn-md btn btn-danger col-sm-3">
     <div class="col-sm-1"></div>
     <input type="submit" value="Submit" class="btn btn-md btn btn-success col-sm-3">
+    <br><br><br>
+    To View Items <a href="itemview.php">Click Here</a>
 </div>
 </BODY>
 </HTML>
