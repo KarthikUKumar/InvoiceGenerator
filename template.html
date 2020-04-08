@@ -9,6 +9,7 @@
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/style.css">
+       <SCRIPT language="javascript" src="rowadd.js"></SCRIPT>
   </head>
   <body>
 		
@@ -73,9 +74,62 @@
           </div>
         </nav>
 
-        <h2 class="mb-4">Sidebar #01</h2>
-        <p>Write code of generate invoice html page here</p>
-     
+     <h4>Generate Invoice</h4>
+    <div class="container">
+    <form id="form1" action="itemadd.php" method="post">
+      <div class="form-group">
+    <label for="cname">Customer Name:</label>
+    <input type="text" class="form-control" placeholder="Enter name" id="cname">
+  </div>
+  <div class="form-group">
+    <label for="cmail">Customer email:</label>
+    <input type="email" class="form-control" placeholder="Enter email" id="cmail">
+  </div><br>
+    <TABLE id="dataTable" class="table order-list">
+        <tr>
+            <td class="col-sm-1"></td>
+            <td class="col-sm-6">ItemName</td>
+            <td class="col-sm-1">Quantity</td>
+            
+            <td class="col-sm-2">Amt before tax</td>
+            <td class="col-sm-2">Amt after tax</td>
+            
+            
+        </tr>
+        <TR>
+            <TD class="col-sm-1"><INPUT type="checkbox" name="chk[]"></TD>
+            <TD class="col-sm-6"><SELECT name="gsaat[]" form="form1" class="form-control">
+                    <OPTION value="0" class="form-control">Nil</OPTION>
+                    <OPTION value="5" class="form-control">5%</OPTION>
+                    <OPTION value="12" class="form-control">12%</OPTION>
+                    <OPTION value="18" class="form-control">18%</OPTION>
+                    <OPTION value="24" class="form-control">24%</OPTION>
+                </SELECT></TD>
+            <td class="col-sm-1"><input type="number" name="qty" class="form-control" ></td>
+            
+            <TD class="col-sm-2">
+                <input type="number" name="amtbtax" class="form-control" disabled>
+            </TD>
+            <TD class="col-sm-2">
+                <input type="number" name="amtatax" class="form-control" disabled>
+            </TD>
+            
+        </TR>
+    </TABLE>
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3"></div>
+      <div class="col-sm-4"></div>
+    <div class="float-right col-sm-2" ><label for="gtot">Grand Total:</label><input type="number" name="grandtot" id="gtot" class="form-control" disabled=""></div></div><br><br>
+    <div class="row"><div class="col-sm-1"></div>
+    <INPUT type="button" value="Add Row +" onclick="addRow('dataTable')" class="btn btn-md btn btn-info col-sm-3 d-inline">
+  <div class="col-sm-1"></div>
+    <INPUT type="button" value="Delete Row -" onclick="deleteRow('dataTable')" class="btn btn-md btn btn-danger col-sm-3 d-inline">
+    <div class="col-sm-1"></div>
+    <input type="submit" value="Submit" class="btn btn-md btn btn-success col-sm-3 d-inline"></div>
+    <br><br><br>
+    To View Items <a href="itemview.php">Click Here</a>
+</div>
       </div>
 		</div>
 
