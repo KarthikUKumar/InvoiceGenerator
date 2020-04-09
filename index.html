@@ -15,6 +15,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <script type="text/javascript" src="js/pass.js"></script>
+
+      
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -28,7 +31,7 @@
                         
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#m1">Sign-in</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" data-toggle="modal" data-target="#m2">Sign-up</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="signup.html">Sign-up</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +59,7 @@
                         <h2 class="text-white mt-0">We've got what you need!</h2>
                         <hr class="divider light my-4" />
                         <p class="text-white-50 mb-4">Our services are free to use, you just need to sign up with your email and start using it. You can access our website anywhere over the world using internet.</p>
-                        <a class="btn btn-light btn-xl js-scroll-trigger" data-toggle="modal" data-target="#m2">Get Started!</a>
+                        <a class="btn btn-light btn-xl js-scroll-trigger" href="signup.html">Get Started!</a>
                     </div>
                 </div>
             </div>
@@ -98,72 +101,11 @@
                 </div>
             </div>
         </section>
-        <!-- Portfolio section
-        <section id="portfolio">
-            <div class="container-fluid p-0">
-                <div class="row no-gutters">
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg"
-                            ><img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div></a
-                        >
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg"
-                            ><img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="" />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div></a
-                        >
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg"
-                            ><img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="" />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div></a
-                        >
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg"
-                            ><img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="" />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div></a
-                        >
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg"
-                            ><img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="" />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div></a
-                        >
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg"
-                            ><img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="" />
-                            <div class="portfolio-box-caption p-3">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div></a
-                        >
-                    </div>
-                </div>
-            </div>
-        </section>-->
-        <!-- Call to action section-->
+
         <section class="page-section bg-dark text-white">
             <div class="container text-center">
                 <h2 class="mb-4">Start using our services for free</h2>
-                <a class="btn btn-light btn-xl text-dark" data-toggle="modal" data-target="#m2">Sign up now!</a>
+                <a class="btn btn-light btn-xl text-dark" href="signup.html">Sign up now!</a>
             </div>
         </section>
         <!-- Contact section-->
@@ -201,7 +143,7 @@
     
       <!-- Modal content-->
       <div class="modal-content">
-        <div class="modal-header"><h4 class="modal-title">Sign in</h4>
+        <div class="modal-header bg-warning"><h4 class="modal-title">Sign in</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           
         </div>
@@ -209,14 +151,16 @@
           <form action="login.php" method='POST'>
   
 
-    <div class="form-group">
+    <div class="form-group form-check">
     
       <label for="uname"><b>Email</b></label>
       <input type="email" class="form-control" placeholder="Enter Email" name="uname" required>
 </div>
-<div class="form-group">
-      <label for="psw"><b>Password</b></label>
-      <input type="password" class="form-control" placeholder="Enter Password" name="psw" required>
+<div class="form-group form-check">
+      <label for="psw"><b>Password</b></label><div class="input-group">
+      <input type="password" class="form-control" placeholder="Enter Password" name="psw" id="pass" required><div class="input-group-append">
+       <button class="btn btn-secondary reveal" type="button" onclick="passvisible('pass')"><i class="fas fa-eye"></i></button>
+         </div></div>
         </div>
 
     <center>   <p>Do not have an account? <a class="btn btn-link" data-toggle="modal" data-dismiss="modal" data-target="#m2">Create account</a></p></center>
@@ -224,62 +168,6 @@
  
         
         <div class="modal-footer"> <button type="submit" class="btn btn-success">Login</button> </form>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-<!-- Modal -->
-  <div class="modal fade" id="m2" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header"><h4 class="modal-title">Sign up</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-        </div>
-        <div class="modal-body">
-          <form action="SignUp.php" method='POST'>
-<div class="form-group">
-      <label for="company"><b>Company</b></label>
-      <input type="text"class="form-control" placeholder="Enter Company Name" name="company" required></div>
-<div class="form-group">
-<label for="uemail"><b>Email</b></label>
-      <input type="email"class="form-control" placeholder="Enter Email" name="uemail" required></div>
-<div class="form-group">
-      <label for="pwd1"><b>Password</b></label>
-      <input type="password"class="form-control" placeholder="Enter Password" name="pwd1" required></div>
-<div class="form-group">
-      <label for="repsw"><b>Re-Enter Password</b></label>
-      <input type="password"class="form-control" placeholder="Re-enter Password" name="repsw" required></div>
-<div class="form-group">
-      <label for="gstin"><b>GSTIN Number</b></label>
-      <input type="text"class="form-control" placeholder="Enter GSTIN No." name="gstin" required></div>
-<div class="form-group">
-       <label for="address"><b>Address Line1</b></label>
-      <input type="text" class="form-control"style="width:100%" placeholder="Enter Address Line2" name="address" required></div>
-<div class="form-group">
-       <label for="Address2"><b>Address Line2</b></label>
-      <input type="text" class="form-control"style="width:100%" placeholder="Enter Address Line1" name="Address2"></div>
-<div class="form-group">
-      <label for="State"><b>State</b></label>
-      <input type="text"class="form-control" placeholder="Enter State" name="State" required></div>
-<div class="form-group">
-      <label for="Country"><b>Country</b></label>
-      <input type="text"class="form-control" placeholder="Enter Country" name="Country" required></div>
-<div class="form-group">
-      <label for="Phone"><b>Phone Number</b></label></div>
-      <input type="text"class="form-control" placeholder="Enter Phone No." name="Phone" required></div>
-
-    
- <center>   <p>Already have an account? <a class="btn btn-link" data-toggle="modal" data-dismiss="modal" data-target="#m1">Sign in</a></p></center>
-    
-    </div>
- 
-        
-        <div class="modal-footer"> <button type="submit" class="btn btn-success">Sign up</button> </form>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
