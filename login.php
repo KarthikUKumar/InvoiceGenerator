@@ -1,9 +1,11 @@
+<?php
+session_start();
+?>
 <html>
 <head>
     <title>Invoice Generator - Login</title>
 </head><body>
 <?php
-session_start();
 try
 {
 	$pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
