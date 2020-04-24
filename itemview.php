@@ -12,16 +12,6 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
   </head>
   <body>
     
@@ -36,7 +26,7 @@ $(document).ready(function(){
 </a>
             </li>
             <li>
-              <a href="#">View bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
+              <a href="viewbill.php">View bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
             </li>
            <li>
             <a href="item.php">Add Items&nbsp;
@@ -88,8 +78,6 @@ $(document).ready(function(){
 
         <h2 class="mb-4">View Items</h2>
         <p><div class="container">
-          <input id="myInput" type="text" placeholder="Search.." class="form-control">
-<br>
   <?php
   $uid=$_SESSION['UserId'];
   $com=$_SESSION['company'];
@@ -101,7 +89,7 @@ $(document).ready(function(){
         $stmt->execute([$uid]);
         $i=0;
         if($stmt->rowCount()!=0){
-          echo "<div class=\"table-responsive-md\"><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id="myTable">;
+          echo "<div class=\"table-responsive-md\"><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"><br><br><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
             $i++;
             echo "<tr><td>$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".$res['price_p_item']." &#8377</td><td>".$res['gst']." &#37;</td></tr>";
@@ -129,6 +117,16 @@ $(document).ready(function(){
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1)
+    });
+  });
+});
+</script>
     <?php
 }
 else{

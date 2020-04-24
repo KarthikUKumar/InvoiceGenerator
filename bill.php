@@ -96,7 +96,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         <div id="Print_Table">
 <div class="container special" style="border:4px double black;">
   <div class="container-fluid" style="border-bottom:1px solid black;"><br>
-    <center><h4>TAX INVOICE</h4></center><br>
+    <center><h5>TAX INVOICE</h5></center><br>
   </div>
   <div class="container-fluid" style="border-bottom:1px solid black;">
     <div class="row">
@@ -147,8 +147,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $smt=$pdo->prepare($sl);
           $smt->execute([$res[0]]);
           $result=$smt->fetch();
-          $gt=$res[2]+$res[3];
-          echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>$result[1] &#8377</td><td>$res[2] &#8377</td><td>$result[2] &#37</td><td>".round($res[3]/2,2)." &#8377</td><td>$result[2] &#37</td><td>".round($res[3]/2,2)." &#8377</td><td>$gt &#8377</td></tr>";
+          echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>".number_format($result[1],2)." &#8377</td><td>".number_format($result[1]*$res[1],2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($res[2]+$res[3],2)." &#8377</td></tr>";
         }
         $grand=explode(".",$rt[4]);
          ?>
@@ -167,13 +166,18 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           <td></td>
           <td></td>
           <td>CGST:</td>
-          <td><?php echo round($totax/2,2); ?> &#8377</td>
+          <td><?php echo number_format($totax/2,2); ?> &#8377</td>
           <td>SGST:</td>
-          <td><?php echo round($totax/2,2); ?> &#8377</td>
+          <td><?php echo number_format($totax/2,2); ?> &#8377</td>
           <td></td>
          </tr>
       </table></div><br>
-      <h3><div align="right">GRAND TOTAL: <?php echo $grand[0]." .00"; ?> &#8377</div></h3><br>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
+          <h6>Total: <?php echo getIndianCurrency($grand[0]); ?> only</h6>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+      <h6><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></h6></div></div><br>
 </div></div></div><br><br>
 <p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print </button></p>
 <iframe name="print_frame" width="0" height="0" frameborder="4" src="about:blank"></iframe>
@@ -198,7 +202,7 @@ else{
 }
 catch(PDOException $e){
  echo "<script> alert(\"Connection Failed - \"".$e->getMessage()."\");
-        window.location='index.html'; </script>";
+        window.location='home.html'; </script>";
         $pdo=null;
 }
 }
@@ -206,7 +210,39 @@ else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='index.html'; </script>";
+            window.location='home.html'; </script>";
+}
+function getIndianCurrency(float $number)
+{
+    $decimal = round($number - ($no = floor($number)), 2) * 100;
+    $hundred = null;
+    $digits_length = strlen($no);
+    $i = 0;
+    $str = array();
+    $words = array(0 => '', 1 => 'One', 2 => 'Two',
+        3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six',
+        7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
+        10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve',
+        13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen',
+        16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
+        19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
+        40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
+        70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
+    $digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
+    while( $i < $digits_length ) {
+        $divider = ($i == 2) ? 10 : 100;
+        $number = floor($no % $divider);
+        $no = floor($no / $divider);
+        $i += $divider == 10 ? 1 : 2;
+        if ($number) {
+            $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+            $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+            $str [] = ($number < 21) ? $words[$number].' '. $digits[$counter]. $plural.' '.$hundred:$words[floor($number / 10) * 10].' '.$words[$number % 10]. ' '.$digits[$counter].$plural.' '.$hundred;
+        } else $str[] = null;
+    }
+    $Rupees = implode('', array_reverse($str));
+    $paise = ($decimal > 0) ? "." . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Paise' : '';
+    return ($Rupees ? $Rupees . 'Rupees ' : '');
 }
 ?>
 </body>

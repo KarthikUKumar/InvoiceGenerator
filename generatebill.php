@@ -26,7 +26,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 </a>
             </li>
             <li>
-              <a href="#">View bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
+              <a href="viewbill.php">View bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
             </li>
            <li>
             <a href="item.php">Add Items&nbsp;
@@ -160,7 +160,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 }
 catch(PDOException $e){
       echo "<script> alert(\"Connection Failed - \"".$e->getMessage()."\");
-        window.location='index.html'; </script>";
+        window.location='home.html'; </script>";
         $pdo=null;
     } 
 }
@@ -168,7 +168,7 @@ else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='index.html'; </script>";
+            window.location='home.html'; </script>";
 }
 ?>
  </body>

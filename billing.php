@@ -16,16 +16,15 @@ try
 	$cphone=$_POST["cphone"];
   $x=0;
 	foreach($_POST['chk'] as $a){
+    if($_POST[$a]==0)
+      continue;
 		$b[$x]=$_POST[$a];
 		$sql1="select price_p_item,gst,iname from Item where user_id=? and itemcode=? Limit 1";
         $stmt1=$pdo->prepare($sql1);
         $stmt1->execute([$uid,$a]);
         $resw=$stmt1->fetch();
-        $uprice[$x]=$resw[0];
-        $cgst[$x]=$resw[1];
-        $item[$x]=$resw[2];
         $tot[$x]=$b[$x]*$resw[0];
-        $tax[$x]=($tot[$x])*($resw[1]/100)*2;
+        $tax[$x]=($tot[$x])*($resw[1]/100);
         $total=$total+($tot[$x]+$tax[$x]);	
         $x++;
 	}
@@ -39,6 +38,8 @@ try
       $_SESSION['orderid']=$orderid;
     	$x=0;
     	foreach($_POST['chk'] as $a){
+        if($_POST[$a]==0)
+          continue;
     		$qty=$_POST[$a];
             $subsql="Insert into Order_Item (order_id,itemcode,quantity,total_amt,tax_amt) values (?,?,?,?,?)";
             $stment=$pdo->prepare($subsql);
@@ -64,7 +65,7 @@ else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='index.html'; </script>";
+            window.location='home.html'; </script>";
 }
 ?>
 </body>
