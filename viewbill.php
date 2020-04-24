@@ -91,7 +91,8 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
         ?>
         <form method="POST" action="">
           <div class="table-responsive-md">
-            <table class="table table-hover">
+            <input class="form-control" id="myInput" type="text" placeholder="Search..."><br><br>
+            <table class="table table-hover"><thead>
               <tr class="table table-active">
                 <th width="7%"></th>
                 <th width="13%">Invoice No.</th>
@@ -99,11 +100,11 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
                 <th width="20%">Time</th>
                 <th width="20%">Customer Name</th>
                 <th width="20%">Total Amount</th>
-              </tr>
+              </tr></thead><tbody id="myTable">
         <?php
         while($row=$stmt->fetch()){
           $date=explode(" ",$row[1]);
-          echo "<tr><td><input type=\"radio\" name=\"radio1\" class=\"custom control input\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</input</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$row[2]</td><td>".number_format($row[3],2)." &#8377</td></tr>";
+          echo "<tr><td><input type=\"radio\" name=\"radio1\" class=\"custom control input\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$row[2]</td><td>".number_format($row[3],2)." &#8377</td></tr>";
         }
         ?>
       </table></div>
@@ -117,7 +118,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     }
     catch(PDOException $e){
       echo "<script> alert(\"Connection Failed - \"".$e->getMessage()."\");
-        window.location='index.html'; </script>";
+        window.location='home.html'; </script>";
         $pdo=null;
     } 
     ?>
@@ -130,13 +131,23 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1)
+    });
+  });
+});
+</script>
     <?php
 }
 else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='index.html'; </script>";
+            window.location='home.html'; </script>";
 }
 ?>
   </body>

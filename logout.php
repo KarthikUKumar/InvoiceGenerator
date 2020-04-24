@@ -7,7 +7,7 @@ session_start();
 session_unset();
 session_destroy();
 echo "<script> alert(\"Suuccessfully Logged out\");
-window.location='index.html'; </script>";
+window.location='home.html'; </script>";
 ?>
 </body>
 </html>
