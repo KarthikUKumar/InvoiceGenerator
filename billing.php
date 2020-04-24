@@ -25,7 +25,7 @@ try
         $cgst[$x]=$resw[1];
         $item[$x]=$resw[2];
         $tot[$x]=$b[$x]*$resw[0];
-        $tax[$x]=($tot[$x])*($resw[1]/100);
+        $tax[$x]=($tot[$x])*($resw[1]/100)*2;
         $total=$total+($tot[$x]+$tax[$x]);	
         $x++;
 	}
