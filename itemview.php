@@ -12,6 +12,16 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
   </head>
   <body>
     
@@ -78,23 +88,25 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 
         <h2 class="mb-4">View Items</h2>
         <p><div class="container">
+          <input id="myInput" type="text" placeholder="Search.." class="form-control">
+<br>
   <?php
   $uid=$_SESSION['UserId'];
   $com=$_SESSION['company'];
   try
-    {
+    { 
       $pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
       $sql="select itemcode,iname,idesc,price_p_item,gst from Item where user_id=? Order By iname";
         $stmt=$pdo->prepare($sql);
         $stmt->execute([$uid]);
         $i=0;
         if($stmt->rowCount()!=0){
-          echo "<div class=\"table-responsive-md\"><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr>";
+          echo "<div class=\"table-responsive-md\"><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id="myTable">;
           while ($res=$stmt->fetch()){
             $i++;
             echo "<tr><td>$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".$res['price_p_item']." &#8377</td><td>".$res['gst']." &#37;</td></tr>";
           }
-          echo "</table></div>";
+          echo "</tbody></table></div>";
         }
         else
         {
