@@ -103,7 +103,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
         <?php
         while($row=$stmt->fetch()){
           $date=explode(" ",$row[1]);
-          echo "<tr><td><input type=\"radio\" name=\"radio1\" class=\"custom control input\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</input</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$row[2]</td><td>".number_format($row[3],2)." &#8377</td></tr>";
+          echo "<tr><td><input type=\"radio\" name=\"radio1\" class=\"custom control input\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$row[2]</td><td>".number_format($row[3],2)." &#8377</td></tr>";
         }
         ?>
       </table></div>
