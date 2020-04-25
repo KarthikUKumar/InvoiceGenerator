@@ -97,7 +97,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 </label>
   
             <input class="form-control" id="myInput" type="text" placeholder="Search..."><br><br>
-            </div>
+          </div></form>
             <table class="table table-hover"><thead>
               <tr class="table table-active">
                 <th width="7%"></th>
