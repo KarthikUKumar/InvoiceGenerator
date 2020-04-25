@@ -4,7 +4,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 ?>
 <html lang="en">
   <head>
-    <title>Invoice Generator - View Bill</title>
+    <title>Invoice Generator - View Item</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,15 +12,6 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript">
-      $('.selectrow tr').click(function() {
- $(this).children('td').children('input').prop('checked', true);
-  
-  $('.selectrow tr').removeClass('selected');
-  $(this).toggleClass('selected');
-
-});
-    </script>
   </head>
   <body>
     
@@ -109,11 +100,11 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
                 <th width="20%">Time</th>
                 <th width="20%">Customer Name</th>
                 <th width="20%">Total Amount</th>
-              </tr></thead><tbody id="myTable" class="selectrow">
+              </tr></thead><tbody id="myTable">
         <?php
         while($row=$stmt->fetch()){
           $date=explode(" ",$row[1]);
-          echo "<tr><td><input type=\"radio\" name=\"radio1\" class=\"form-check-label\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$row[2]</td><td>".number_format($row[3],2)." &#8377</td></tr>";
+          echo "<tr><td><input type=\"radio\" name=\"radio1\" class=\"custom control input\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$row[2]</td><td>".number_format($row[3],2)." &#8377</td></tr>";
         }
         ?>
       </table></div>

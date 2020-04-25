@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign-up Invoice Generator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/pass.js"></script>
+  <script type="text/javascript" src="js/pattern.js"></script>
+   <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
+   <script type="text/javascript">$(document).on('keydown', 'input[pattern]', function(e){
+  var input = $(this);
+  var oldVal = input.val();
+  var regex = new RegExp(input.attr('pattern'), 'g');
+
+  setTimeout(function(){
+    var newVal = input.val();
+    if(!regex.test(newVal)){
+      input.val(oldVal); 
+    }
+  }, 0);
+});</script>
+<style type="text/css">
+  body{
+    background-image: linear-gradient(to right, #5567de, #009aff, #00c3fd, #00e4dc, #71ffb6);
+  }
+
+</style>
+</head>
+<body>
+ 
+<div class="container"><br><br>
+<a href="index.html" class="btn text-dark">  <h2>Invoice Generator</h2></a>
+  <div class="card shadow p-4 mb-4 bg-white">
+    <div class="card-header">Sign Up</div>
+    <div class="card-body">
+          <form action="SignUp.php" method='POST' id="form123">
+<div class="form-group">
+      <label for="company"><b>Company</b></label>
+      <input type="text"class="form-control" placeholder="Enter Company Name" name="company" required></div>
+<div class="form-group">
+<label for="uemail"><b>Email</b></label>
+      <input type="email"class="form-control" placeholder="Enter Email" name="uemail" required></div>
+<div class="form-group">
+      <label for="pwd1"><b>Password</b></label><div class="input-group">
+      <input type="password"class="form-control" placeholder="Enter Password(A-Z and a-z and 0-9 with atleast one special character)" name="pwd1" id="pwd" onblur="test_str('pwd')" required><div class="input-group-append">
+       <button class="btn btn-secondary reveal" type="button" onclick="passvisible('pwd');"><i class="fas fa-eye"></i></button>
+         </div></div></div>
+<div class="form-group">
+      <label for="repsw"><b>Re-Enter Password</b></label><div class="input-group">
+      <input type="password" class="form-control" placeholder="Re-enter Password" name="repsw" id="rpwd" onblur="checkPassword()" required><div class="input-group-append">
+       <button class="btn btn-secondary reveal" type="button" onclick="passvisible('rpwd')"><i class="fas fa-eye"></i></button>
+         </div></div></div>
+<div class="form-group">
+      <label for="gstin"><b>GSTIN Number</b></label>
+      <input type="text" class="form-control" placeholder="Enter GSTIN No." maxlength="15" name="gstin" onclick="select()" onkeyup="var start = this.selectionStart;
+  var end = this.selectionEnd;
+  this.value = this.value.toUpperCase();
+  this.setSelectionRange(start, end);"  required></div>
+<div class="form-group">
+       <label for="address"><b>Address Line1</b></label>
+      <input type="text" class="form-control"style="width:100%" placeholder="Enter Address Line2" name="address" required></div>
+<div class="form-group">
+       <label for="Address2"><b>Address Line2</b></label>
+      <input type="text" class="form-control"style="width:100%" placeholder="Enter Address Line1" name="Address2"></div>
+<div class="form-group">
+      <label for="State"><b>State</b></label>
+      <input type="text"class="form-control" placeholder="Enter State" name="State" id="State" required></div>
+<div class="form-group">
+      <label for="Country"><b>Country</b></label>
+      <input type="text"class="form-control" placeholder="Enter Country" name="Country" required></div>
+      <div class="form-group">
+      <label for="pincode"><b>Pin Code</b></label>
+      <input name="pincode" class="form-control" form="form123" placeholder="Enter Pin Code" pattern="^\d*$" id="pincode"  value="" maxlength="6"></div>
+<div class="form-group">
+      <label for="Phone"><b>Phone Number</b></label>
+      <input pattern="^\d*$" class="form-control" placeholder="Enter Phone No." name="Phone" maxlength="10" required></div>   
+ <center>   <p>Already have an account?<a class="btn btn-link" href="home.html">Sign in</a></p></center>
+    </div>
+    <div class="card-footer">
+<button type="submit" class="btn btn-success float-right">Sign up</button> </form>
+    </div>
+  </div><br><br>
+</div>
+
+</body>
+</html>
