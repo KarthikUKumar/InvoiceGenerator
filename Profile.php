@@ -129,7 +129,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   <div class="float-right">
     <button type="reset" id="sreset" class="btn btn-danger" hidden>Reset</button>
   <button type="button" onclick="dosome();" id="sedit" class="btn btn-info">Edit</button>
-  &nbsp;&nbsp;<button type="submit" class="btn btn-success" id="sbutton" disabled>Submit</button>
+  &nbsp;&nbsp;<button type="submit" class="btn btn-success" id="sbutton" hidden>Submit</button>
 </div>
 </form>
 </div>
@@ -154,7 +154,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <script src="js/main.js"></script>
     <script>function dosome(){
       document.getElementById('cname').removeAttribute('disabled');
-      document.getElementById('sbutton').removeAttribute('disabled');
+      document.getElementById('sbutton').removeAttribute('hidden');
       document.getElementById('state').removeAttribute('disabled');
       document.getElementById('country').removeAttribute('disabled');
       document.getElementById('pincode').removeAttribute('disabled');

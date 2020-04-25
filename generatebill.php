@@ -101,22 +101,25 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <label for="cphone">Customer Phone Number:</label>
     <input pattern="^\d*$" maxlength="10" class="form-control" placeholder="Enter phone number" name="cphone" form="from1" required>
   </div><br>
-  <div class="table-responsive-md">
+  <div class="table-responsive-md"><div class="input-group mb-3">
+    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span></div>
+    <input class="form-control" id="myInput" type="text" placeholder="Search..."></div><br><br>
     <TABLE id="dataTable" class="table order-list table-hover">
-        <tr class="table table-active">
+        <thead><tr class="table table-active">
             <th width="5%"></th>
             <th width="20%">SKU Code</th> 
             <th width="25%">Item</th>
             <th width="20%">Price/Item</th>
             <th width="10%">GST</th> 
             <th width="20%">Quantity</th> 
-        </tr>
+        </tr></thead><tbody id="myTable">
           <?php 
           if($stmt->rowCount()!=0){
             while ($res=$stmt->fetch()){
-              echo "<tr><TD><INPUT type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\"></TD><td>$res[0]</td><TD>$res[1]</td><td>&#8377 $res[2]</td><td>$res[3] &#37;</td><td><input pattern=\"^\d*(\.\d{0,2})?$\" name=\"$res[0]\" onclick=\"this.select();\" value=\"0\" class=\"form-control\" form=\"from1\"></td></tr>";
+              echo "<tr><td><div class=\"form-check\"><label class=\"form-check-label\"><input class=\"form-check-input\" type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\"></TD><td>$res[0]</td><TD>$res[1]</td><td>&#8377 $res[2]</td><td>$res[3] &#37;</td><td><input pattern=\"^\d*(\.\d{0,2})?$\" name=\"$res[0]\" onclick=\"this.select();\" value=\"0\" class=\"form-control\" form=\"from1\"></td></label></div></tr>";
             }
                     ?>
+                  </tbody>
     </TABLE>
   </div>
 <div class="row">
@@ -138,6 +141,16 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+      <script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1)
+    });
+  });
+});
+</script>
       <script type="text/javascript">$(document).on('keydown', 'input[pattern]', function(e){
   var input = $(this);
   var oldVal = input.val();

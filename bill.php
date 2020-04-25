@@ -21,7 +21,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"]) && $_SESSION["gst"]
     <div class="wrapper d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="p-4 pt-5"><center>
-          <a href="#" class="img logo rounded-circle mb-5"><i style="font-size: 90px;" class="fa fa-user-circle" aria-hidden="true"></i><br><?php echo $_SESSION['company']; ?>
+          <a href="Profile.php" class="img logo rounded-circle mb-5"><i style="font-size: 90px;" class="fa fa-user-circle" aria-hidden="true"></i><br><?php echo $_SESSION['company']; ?>
 </a></center>
           <ul class="list-unstyled components mb-5">
             <li>
@@ -160,7 +160,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           <td>  - 0. <?php echo $grand[1]; ?> &#8377</td>
          </tr>
          <tr></tr><tr></tr><tr></tr>
-         <tr>
+         <tr style="border-top:1px solid black;">
           <td></td>
           <td>Total Taxable Value</td>
           <td></td>
@@ -175,10 +175,11 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
       </table></div><br>
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
-          <h6>Total: <?php echo getIndianCurrency($grand[0]); ?> only</h6>
+          <b style="color:black;">Total Amt in words:
+           <?php echo getIndianCurrency($grand[0]); ?> only</b>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-      <h6><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></h6></div></div><br>
+      <b style="color:black;"><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></b></div></div><br>
 </div></div></div><br><br>
 <p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print Receipt </button></p>
 <iframe name="print_frame" width="0" height="0" frameborder="4" src="about:blank"></iframe>

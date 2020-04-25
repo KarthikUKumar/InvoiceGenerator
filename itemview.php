@@ -42,7 +42,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
             
             
             <li  class="active">
-              <a href="#">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+              <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
            
@@ -89,7 +89,8 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
         $stmt->execute([$uid]);
         $i=0;
         if($stmt->rowCount()!=0){
-          echo "<div class=\"table-responsive-md\"><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"><br><br><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id=\"myTable\">";
+          echo "<div class=\"table-responsive-md\"><div class=\"input-group mb-3\">
+    <div class=\"input-group-prepend\"><span class=\"input-group-text\"><i class=\"fa fa-search\" aria-hidden=\"true\"></i></span></div><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"></div><br><br><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
             $i++;
             echo "<tr><td>$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".$res['price_p_item']." &#8377</td><td>".$res['gst']." &#37;</td></tr>";
