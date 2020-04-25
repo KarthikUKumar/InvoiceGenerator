@@ -124,8 +124,10 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   <div class="form-group">
     <label for="pincode">Pin Code:</label>
     <input pattern="^\d*$" maxlength="6" class="form-control" <?php echo "value=\"$res[7]\""; ?> name="pincode" id="pincode" form="from1" disabled onclick="select()" required>
-  </div><br><div class="float-right">
-    <button type="reset" id="sreset" class="btn btn-info" hidden>Reset</button>
+  </div><br>
+  <a href="Profile.php" id="scancel" class="btn btn-info" hidden>Cancel</a>
+  <div class="float-right">
+    <button type="reset" id="sreset" class="btn btn-danger" hidden>Reset</button>
   <button type="button" onclick="dosome();" id="sedit" class="btn btn-info">Edit</button>
   &nbsp;&nbsp;<button type="submit" class="btn btn-success" id="sbutton" disabled>Submit</button>
 </div>
@@ -164,6 +166,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   } else {
     x.style.display = "none";
   }
+  document.getElementById('scancel').removeAttribute('hidden');
   document.getElementById('sreset').removeAttribute('hidden');
     }</script>
     <script type="text/javascript">$(document).on('keydown', 'input[pattern]', function(e){
