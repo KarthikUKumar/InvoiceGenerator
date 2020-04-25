@@ -91,7 +91,13 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
         ?>
         <form method="POST" action="">
           <div class="table-responsive-md">
+            <form class="form-inline">
+  <div class="form-group">
+    <label for="myInput"><i class="fa fa-search" aria-hidden="true"></i>
+</label>
+  
             <input class="form-control" id="myInput" type="text" placeholder="Search..."><br><br>
+            </div>
             <table class="table table-hover"><thead>
               <tr class="table table-active">
                 <th width="7%"></th>
