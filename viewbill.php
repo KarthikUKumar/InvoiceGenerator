@@ -4,7 +4,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 ?>
 <html lang="en">
   <head>
-    <title>Invoice Generator - View Item</title>
+    <title>Invoice Generator - View Bill</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,6 +12,15 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript">
+      $('.selectrow tr').click(function() {
+ $(this).children('td').children('input').prop('checked', true);
+  
+  $('.selectrow tr').removeClass('selected');
+  $(this).toggleClass('selected');
+
+});
+    </script>
   </head>
   <body>
     
@@ -100,7 +109,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
                 <th width="20%">Time</th>
                 <th width="20%">Customer Name</th>
                 <th width="20%">Total Amount</th>
-              </tr></thead><tbody id="myTable">
+              </tr></thead><tbody id="myTable" class="selectrow">
         <?php
         while($row=$stmt->fetch()){
           $date=explode(" ",$row[1]);

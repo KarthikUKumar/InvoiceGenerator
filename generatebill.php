@@ -12,6 +12,15 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript">
+      $('.selectrow tr').click(function() {
+ $(this).children('td').children('input').prop('checked', true);
+  
+  $('.selectrow tr').removeClass('selected');
+  $(this).toggleClass('selected');
+
+});
+    </script>
   </head>
   <body>
     
@@ -111,12 +120,14 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
             <th width="10%">GST</th> 
             <th width="20%">Quantity</th> 
         </tr>
+        <tbody class="selectrow">
           <?php 
           if($stmt->rowCount()!=0){
             while ($res=$stmt->fetch()){
               echo "<tr><TD><INPUT type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\"></TD><td>$res[0]</td><TD>$res[1]</td><td>&#8377 $res[2]</td><td>$res[3] &#37;</td><td><input pattern=\"^\d*(\.\d{0,2})?$\" name=\"$res[0]\" onclick=\"this.select();\" value=\"0\" class=\"form-control\" form=\"from1\"></td></tr>";
             }
                     ?>
+                    </tbody>
     </TABLE>
   </div>
 <div class="row">
