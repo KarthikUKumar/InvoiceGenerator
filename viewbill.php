@@ -18,7 +18,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <div class="wrapper d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="p-4 pt-5"><center>
-          <a href="#" class="img logo rounded-circle mb-5"><i style="font-size: 90px;" class="fa fa-user-circle" aria-hidden="true"></i><br><?php echo $_SESSION['company']; ?>
+          <a href="Profile.php" class="img logo rounded-circle mb-5"><i style="font-size: 90px;" class="fa fa-user-circle" aria-hidden="true"></i><br><?php echo $_SESSION['company']; ?>
 </a></center>
           <ul class="list-unstyled components mb-5">
             <li>
