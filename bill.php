@@ -21,7 +21,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"]) && $_SESSION["gst"]
     <div class="wrapper d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="p-4 pt-5"><center>
-          <a href="Profile.php" class="img logo rounded-circle mb-5"><i style="font-size: 90px;" class="fa fa-user-circle" aria-hidden="true"></i><br><?php echo $_SESSION['company']; ?>
+          <a href="#" class="img logo rounded-circle mb-5"><i style="font-size: 90px;" class="fa fa-user-circle" aria-hidden="true"></i><br><?php echo $_SESSION['company']; ?>
 </a></center>
           <ul class="list-unstyled components mb-5">
             <li>
@@ -80,6 +80,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"]) && $_SESSION["gst"]
         </nav>
         <h4>Tax Invoice</h4>
 <?php
+if(isset($_SESSION['orderid'])){
 $orderid=$_SESSION['orderid'];
 $totax=0;
 try{
@@ -156,7 +157,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           <td></td>
           <td>Discount</td>
           <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-          <td> - 0. <?php echo $grand[1]; ?> &#8377</td>
+          <td>  - 0. <?php echo $grand[1]; ?> &#8377</td>
          </tr>
          <tr></tr><tr></tr><tr></tr>
          <tr>
@@ -179,7 +180,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
       <h6><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></h6></div></div><br>
 </div></div></div><br><br>
-<p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print </button></p>
+<p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print Receipt </button></p>
 <iframe name="print_frame" width="0" height="0" frameborder="4" src="about:blank"></iframe>
 </div></div>
 <script src="js/jquery.min.js"></script>
@@ -204,6 +205,11 @@ catch(PDOException $e){
  echo "<script> alert(\"Connection Failed - \"".$e->getMessage()."\");
         window.location='home.html'; </script>";
         $pdo=null;
+}
+}
+else{
+  echo "<script> alert(\"Please try again later.\");
+            window.location='generatebill.php'; </script>";
 }
 }
 else{
