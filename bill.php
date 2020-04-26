@@ -148,7 +148,8 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $smt=$pdo->prepare($sl);
           $smt->execute([$res[0]]);
           $result=$smt->fetch();
-          echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>".number_format($result[1],2)." &#8377</td><td>".number_format($result[1]*$res[1],2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($res[2]+$res[3],2)." &#8377</td></tr>";
+          $actprice=$result[1]/(1+$result[2]/100);
+          echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>".number_format($actprice,2)." &#8377</td><td>".number_format($actprice*$res[1],2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($res[2]+$res[3],2)." &#8377</td></tr>";
         }
         $grand=explode(".",$rt[4]);
          ?>

@@ -23,7 +23,8 @@ try
         $stmt1=$pdo->prepare($sql1);
         $stmt1->execute([$uid,$a]);
         $resw=$stmt1->fetch();
-        $tot[$x]=$b[$x]*$resw[0];
+        $actprice=$resw[0]/(1+$resw[1]/100);
+        $tot[$x]=$b[$x]*$actprice;
         $tax[$x]=($tot[$x])*($resw[1]/100);
         $total=$total+($tot[$x]+$tax[$x]);	
         $x++;
