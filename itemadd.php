@@ -14,6 +14,9 @@ try
 	    $price=$_POST['price'];
 	    $desc=$_POST['desc'];
         $gst=$_POST['gst'];
+$gstrate=$gst/100;
+$price=$price-($price/(1+$gstrate));
+$price=round($price,2);
         $i=0;
         $flag=1;
         try{
