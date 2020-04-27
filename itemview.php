@@ -134,7 +134,7 @@ else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='index.html'; </script>";
+            window.location='home.html'; </script>";
 }
 ?>
   </body>
