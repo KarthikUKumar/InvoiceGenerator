@@ -26,7 +26,7 @@ try
                 $stmt->execute([$code[$a],$uid,$name[$a],$desc[$a],$price[$a],(int)$gst[$a]]);
             }
             $pdo->commit();
-                echo "<script> alert(\"Inserted $a Items Successfully\");
+                echo "<script> alert(\"Inserted ".($a+1)." Items Successfully\");
                         window.location='itemview.php'; </script>";
            /* }
             elseif ($a==0) {
