@@ -91,7 +91,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
       <div class="container">
     <form id="from1" action="update.php" method="post">
       <div class="form-group">
-    <label for="cname">Company Name:</label>
+    <label for="cname">Shop Name:</label>
     <input type="text" class="form-control" name="company" id="cname" disabled onclick="select()" <?php echo "value=\"$res[0]\""; ?> required>
   </div>
   <div class="form-group">

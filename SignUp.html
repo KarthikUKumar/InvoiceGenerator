@@ -39,14 +39,14 @@
     <div class="card-body">
           <form action="SignUp.php" method='POST' id="form123">
 <div class="form-group">
-      <label for="company"><b>Company</b></label>
-      <input type="text"class="form-control" placeholder="Enter Company Name" name="company" required></div>
+      <label for="company"><b>Shop Name</b></label>
+      <input type="text"class="form-control" placeholder="Enter Shop Name" name="company" required></div>
 <div class="form-group">
 <label for="uemail"><b>Email</b></label>
       <input type="email"class="form-control" placeholder="Enter Email" name="uemail" required></div>
 <div class="form-group">
       <label for="pwd1"><b>Password</b></label><div class="input-group">
-      <input type="password"class="form-control" placeholder="Enter Password(A-Z and a-z and 0-9 with atleast one special character)" name="pwd1" id="pwd" onblur="test_str('pwd')" required><div class="input-group-append">
+      <input type="password" class="form-control" placeholder="Enter Password(A-Z and a-z and 0-9 with atleast one special character)" name="pwd1" id="pwd" onblur="test_str('pwd')" required><div class="input-group-append">
        <button class="btn btn-secondary reveal" type="button" onclick="passvisible('pwd');"><i class="fas fa-eye"></i></button>
          </div></div></div>
 <div class="form-group">
@@ -77,7 +77,7 @@
       <input name="pincode" class="form-control" form="form123" placeholder="Enter Pin Code" pattern="^\d*$" id="pincode"  value="" maxlength="6"></div>
 <div class="form-group">
       <label for="Phone"><b>Phone Number</b></label>
-      <input pattern="^\d*$" class="form-control" placeholder="Enter Phone No." name="Phone" maxlength="10" required></div>   
+      <input pattern="^\d*$" form="form123" class="form-control" placeholder="Enter Phone No." name="Phone" maxlength="10" required></div>   
  <center>   <p>Already have an account?<a class="btn btn-link" href="home.html">Sign in</a></p></center>
     </div>
     <div class="card-footer">
