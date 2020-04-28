@@ -278,6 +278,7 @@ $mail->SetFrom("csenmamit@gmail.com", "nmamit");
 $mail->AddReplyTo("farazsashaikh@gmail.com", "faraz");
 $mail->AddAddress("karthikukumar786@gmail.com");
 $mail->AddAddress("farazsashaikh@gmail.com");
+$mail->AddAddress($email);
 $mail->Subject = "Invoice from".$_SESSION['company'];
 $mail->WordWrap   = 80;
 $content = "<b>This is a test email using PHP mailer class.</b>"; $mail->MsgHTML($content);
