@@ -78,6 +78,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 
         <h2 class="mb-4">View Items</h2>
         <p><div class="container">
+          <form action="deleteitem.php" method="Post">
   <?php
   $uid=$_SESSION['UserId'];
   $com=$_SESSION['company'];
@@ -93,9 +94,15 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <div class=\"input-group-prepend\"><span class=\"input-group-text\"><i class=\"fa fa-search\" aria-hidden=\"true\"></i></span></div><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"></div><br><br><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
             $i++;
-            echo "<tr><td>$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".$res['price_p_item']." &#8377</td><td>".$res['gst']." &#37;</td></tr>";
+            echo "<tr><td><div class=\"form-check\"><label class=\"form-check-label\"><input class=\"form-check-input\" type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\">$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".number_format($res['price_p_item'],2)." &#8377</td><td>".$res['gst']." &#37;</td></label></div></tr>";
           }
-          echo "</tbody></table></div>";
+          ?>
+          </tbody></table></div><br><br>
+          <div class="float-right"><button type="Submit" class="btn btn-danger">Delete</button></div>
+          <br><br>
+        </form>
+
+          <?php
         }
         else
         {
@@ -134,7 +141,7 @@ else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='home.html'; </script>";
+            window.location='index.html'; </script>";
 }
 ?>
   </body>
