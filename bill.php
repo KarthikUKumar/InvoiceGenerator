@@ -90,6 +90,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         $snt->execute([$orderid]);
         if($snt->rowCount()!=0){
           $rt=$snt->fetch();
+          $email=$rt[2];
           $dt=explode(" ",$rt[0]);
           $date=date("d-m-yy",strtotime($dt[0]));
           $time=date("H:i:s",strtotime($dt[1]));
@@ -182,7 +183,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
       <b style="color:black;"><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></b></div></div><br>
 </div></div></div><br><br>
-<p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print Receipt </button></p>
+<p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print Receipt </button><button type="submit" class="btn btn-primary" name="sendm">Send mail</button></p>
 <iframe name="print_frame" width="0" height="0" frameborder="4" src="about:blank"></iframe>
 </div></div>
 <script src="js/jquery.min.js"></script>
@@ -255,3 +256,35 @@ function getIndianCurrency(float $number)
 ?>
 </body>
 </html>
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+if(isset($_POST['sendm']))
+{
+$mail = new PHPMailer();
+$mail->IsSMTP();
+$mail->SMTPDebug = 0;
+$mail->SMTPAuth = TRUE;
+$mail->SMTPSecure = "tls";
+$mail->Port     = 587;  
+$mail->Username = "csenmamit@gmail.com";
+$mail->Password = "faraz@2020";
+$mail->Host     = "smtp.gmail.com";
+$mail->Mailer   = "smtp";
+$mail->SetFrom("csenmamit@gmail.com", "nmamit");
+$mail->AddReplyTo("farazsashaikh@gmail.com", "faraz");
+$mail->AddAddress("karthikukumar786@gmail.com");
+$mail->AddAddress("farazsashaikh@gmail.com");
+$mail->Subject = "Invoice from".$_SESSION['company'];
+$mail->WordWrap   = 80;
+$content = "<b>This is a test email using PHP mailer class.</b>"; $mail->MsgHTML($content);
+$mail->IsHTML(true);
+if(!$mail->Send()) 
+echo "Problem sending email.";
+else 
+echo "email sent.";
+}
+?>
