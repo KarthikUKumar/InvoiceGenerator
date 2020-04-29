@@ -4,7 +4,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 ?>
 <html lang="en">
   <head>
-    <title>Invoice Generator - View Item</title>
+    <title>Invoice Generator - View Bill</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
