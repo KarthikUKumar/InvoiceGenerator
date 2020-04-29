@@ -128,8 +128,8 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   <a href="Profile.php" id="scancel" class="btn btn-info" hidden>Cancel</a>
   <div class="float-right">
     <button type="reset" id="sreset" class="btn btn-danger" hidden>Reset</button>
-  <button type="button" onclick="dosome();" id="sedit" class="btn btn-info"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
-  &nbsp;&nbsp;<button type="submit" class="btn btn-success" id="sbutton" hidden>Submit</button>
+  <button type="button" onclick="dosome();" id="sedit" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
+  &nbsp;&nbsp;<button type="submit" class="btn btn-primary" id="sbutton" hidden>Submit</button>
 </div>
 </form>
 </div>

@@ -12,6 +12,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"]) && $_SESSION["gst"]
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <style>
       table td + td,table th + th { border-left:1px solid black; padding: 5px;text-align: left;}
     </style>
@@ -94,11 +95,12 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $dt=explode(" ",$rt[0]);
           $date=date("d-m-yy",strtotime($dt[0]));
           $time=date("H:i:s",strtotime($dt[1]));
+          $cemail="mailto:".$rt[2];
         ?>
         <div id="Print_Table">
 <div class="container special" style="border:4px double black;">
   <div class="container-fluid" style="border-bottom:1px solid black;"><br>
-    <center><h5>TAX INVOICE</h5></center><br>
+    <center><h5>TAX INVOICE</h5></center>
   </div>
   <div class="container-fluid" style="border-bottom:1px solid black;">
     <div class="row">
@@ -153,6 +155,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>".number_format($actprice,2)." &#8377</td><td>".number_format($actprice*$res[1],2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($res[2]+$res[3],2)." &#8377</td></tr>";
         }
         $grand=explode(".",$rt[4]);
+
          ?>
          <tr></tr><tr></tr><tr></tr>
          <tr>
@@ -183,19 +186,25 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
       <b style="color:black;"><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></b></div></div><br>
 </div></div></div><br><br>
-<p align="right"><button type="button" class="btn btn-primary" onclick="printdiv()"> Print Receipt </button><button type="submit" class="btn btn-primary" name="sendm">Send mail</button></p>
-<iframe name="print_frame" width="0" height="0" frameborder="4" src="about:blank"></iframe>
-</div></div>
+<div class="float-right"><a href="<?php echo $cemail; ?>" class="btn btn-primary">Send mail</a>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"> Print Receipt </button></div></div></div>
 <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      function print() {
+        var orderid=<?php echo json_encode($orderid); ?>;
+    const filename  = 'invoice - '+ orderid +'.pdf';
+
+    html2canvas(document.querySelector('#Print_Table'), 
+                {scale: 8}
+             ).then(canvas => {
+      let pdf = new jsPDF('p', 'mm', 'a4');
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 290);
+      pdf.save(filename);
+    });
+  }
+    </script>
     <script src="js/main.js"></script>
-    <script>function printdiv(){
-window.frames["print_frame"].document.body.innerHTML=document.getElementById("Print_Table").innerHTML;
-window.frames["print_frame"].window.focus();
-window.frames["print_frame"].window.print();
-}
-</script>
 <?php
 }
 else{
@@ -256,36 +265,3 @@ function getIndianCurrency(float $number)
 ?>
 </body>
 </html>
-<?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-if(isset($_POST['sendm']))
-{
-$mail = new PHPMailer();
-$mail->IsSMTP();
-$mail->SMTPDebug = 0;
-$mail->SMTPAuth = TRUE;
-$mail->SMTPSecure = "tls";
-$mail->Port     = 587;  
-$mail->Username = "csenmamit@gmail.com";
-$mail->Password = "faraz@2020";
-$mail->Host     = "smtp.gmail.com";
-$mail->Mailer   = "smtp";
-$mail->SetFrom("csenmamit@gmail.com", "nmamit");
-$mail->AddReplyTo("farazsashaikh@gmail.com", "faraz");
-$mail->AddAddress("karthikukumar786@gmail.com");
-$mail->AddAddress("farazsashaikh@gmail.com");
-$mail->AddAddress($email);
-$mail->Subject = "Invoice from".$_SESSION['company'];
-$mail->WordWrap   = 80;
-$content = "<b>This is a test email using PHP mailer class.</b>"; $mail->MsgHTML($content);
-$mail->IsHTML(true);
-if(!$mail->Send()) 
-echo "Problem sending email.";
-else 
-echo "email sent.";
-}
-?>
