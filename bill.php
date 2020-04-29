@@ -96,8 +96,6 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $date=date("d-m-yy",strtotime($dt[0]));
           $time=date("H:i:s",strtotime($dt[1]));
           $_SESSION['customermail']=$rt[2];
-          $_SESSION['total']=number_format($grand[0],2)." &#8377";
-          $_SESSION['words']=getIndianCurrency($grand[0]);
         ?>
         <div id="Print_Table">
 <div class="container special" style="border:4px double black;">
@@ -188,7 +186,9 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
       <b style="color:black;"><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></b></div></div><br>
 </div></div></div><br><br>
-<div class="float-right"><form action="mailto.php" method="POST"><button type="button" class="btn btn-primary">Send mail</button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"> Print Receipt </button></form></div></div></div>
+<?php  $_SESSION['total']=number_format($grand[0],2)." ₹";
+          $_SESSION['words']=getIndianCurrency($grand[0]); ?>
+<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary">Send mail</button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"> Print Receipt </button></form></div></div></div>
 <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
