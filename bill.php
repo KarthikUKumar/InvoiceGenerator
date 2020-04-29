@@ -95,7 +95,9 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $dt=explode(" ",$rt[0]);
           $date=date("d-m-yy",strtotime($dt[0]));
           $time=date("H:i:s",strtotime($dt[1]));
-          $cemail="mailto:".$rt[2];
+          $_SESSION['customermail']=$rt[2];
+          $_SESSION['total']=number_format($grand[0],2)." &#8377";
+          $_SESSION['words']=getIndianCurrency($grand[0]);
         ?>
         <div id="Print_Table">
 <div class="container special" style="border:4px double black;">
@@ -186,7 +188,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
       <b style="color:black;"><div align="right">GRAND TOTAL: <?php echo number_format($grand[0],2); ?> &#8377</div></b></div></div><br>
 </div></div></div><br><br>
-<div class="float-right"><a href="<?php echo $cemail; ?>" class="btn btn-primary">Send mail</a>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"> Print Receipt </button></div></div></div>
+<div class="float-right"><form action="mailto.php" method="POST"><button type="button" class="btn btn-primary">Send mail</button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"> Print Receipt </button></form></div></div></div>
 <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -196,7 +198,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
     const filename  = 'invoice - '+ orderid +'.pdf';
 
     html2canvas(document.querySelector('#Print_Table'), 
-                {scale: 8}
+                {scale: 5}
              ).then(canvas => {
       let pdf = new jsPDF('p', 'mm', 'a4');
       pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 290);
