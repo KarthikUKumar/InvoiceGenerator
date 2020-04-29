@@ -93,7 +93,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
           <div class="table-responsive-md"><div class="input-group mb-3">
     <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span></div>
             <input class="form-control" id="myInput" type="text" placeholder="Search..."></div><br><br>
-            <table class="table table-hover"><thead>
+            <table class="table table-hover" id="tableSelect"><thead>
               <tr class="table table-active">
                 <th width="7%"></th>
                 <th width="13%">Invoice No.</th>
@@ -141,7 +141,11 @@ $(document).ready(function(){
     });
   });
 });
+$('#tableSelect tr').click(function(){
+    $(this).find('input[type=radio]').prop('checked', true);
+});
 </script>
+
     <?php
 }
 else{

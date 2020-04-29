@@ -12,6 +12,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+   
   </head>
   <body>
     
@@ -162,8 +163,18 @@ $(document).ready(function(){
       input.val(oldVal); 
     }
   }, 0);
-});</script>
- 
+});
+
+</script>
+ <script type="text/javascript">
+      $(document).ready(function() {
+    $('#dataTable tr').click(function(event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+});
+    </script> 
 <?php
 }
           else{
