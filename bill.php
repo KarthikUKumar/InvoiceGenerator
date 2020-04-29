@@ -201,7 +201,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
                 {scale: 5}
              ).then(canvas => {
       let pdf = new jsPDF('p', 'mm', 'a4');
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 290);
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 211, 295);
       pdf.save(filename);
     });
   }
