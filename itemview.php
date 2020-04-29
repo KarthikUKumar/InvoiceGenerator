@@ -98,7 +98,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
           }
           ?>
           </tbody></table></div><br><br>
-          <div class="float-right"><button type="Submit" class="btn btn-danger">Delete</button></div>
+          <div class="float-right"><button type="Submit" class="btn btn-danger">&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button></div>
           <br><br>
         </form>
 
