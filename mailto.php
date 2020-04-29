@@ -1,5 +1,12 @@
 <?php
 session_start();
+?>
+<html>
+<head><title>
+	Invoice Generator - Mailing
+</title></head>
+<body>
+<?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
@@ -32,3 +39,5 @@ else
 echo "<script>alert(\"Mail Sent.\");
         window.location='bill.php' </script>";
 ?>
+</body>
+</html>
