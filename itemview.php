@@ -91,7 +91,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
         $i=0;
         if($stmt->rowCount()!=0){
           echo "<div class=\"table-responsive-md\"><div class=\"input-group mb-3\">
-    <div class=\"input-group-prepend\"><span class=\"input-group-text\"><i class=\"fa fa-search\" aria-hidden=\"true\"></i></span></div><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"></div><br><br><table class=\"table table-hover\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id=\"myTable\">";
+    <div class=\"input-group-prepend\"><span class=\"input-group-text\"><i class=\"fa fa-search\" aria-hidden=\"true\"></i></span></div><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"></div><br><br><table class=\"table table-hover\" id=\"tableSelect\"><CENTER><tr class=\"table table-active\"><th width=\"10%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"30%\">Description</th><th width=\"10%\">Price/Item</th><th width=\"10%\">GST</th><center></tr><tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
             $i++;
             echo "<tr><td><div class=\"form-check\"><label class=\"form-check-label\"><input class=\"form-check-input\" type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\">$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".number_format($res['price_p_item'],2)." &#8377</td><td>".$res['gst']." &#37;</td></label></div></tr>";
@@ -133,6 +133,9 @@ $(document).ready(function(){
       $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1)
     });
   });
+});
+      $('#tableSelect tr').click(function(){
+    $(this).find('input[type=radio]').prop('checked', true);
 });
 </script>
     <?php
