@@ -97,7 +97,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $time=date("H:i:s",strtotime($dt[1]));
           $_SESSION['customermail']=$rt[2];
         ?>
-        <div id="Print_Table">
+        <div id="Print_Table" class="print1"> 
 <div class="container special" style="border:4px double black;">
   <div class="container-fluid" style="border-bottom:1px solid black;"><br>
     <center><h5>TAX INVOICE</h5></center>
@@ -143,6 +143,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         $l=0;
         $sql="Select itemcode,quantity,total_amt,tax_amt from Order_Item where Order_Id=?";
         $stmt=$pdo->prepare($sql);
+        $items="";
         $stmt->execute([$orderid]);
         while($res=$stmt->fetch()){
           $l++;
@@ -152,10 +153,11 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $smt->execute([$res[0]]);
           $result=$smt->fetch();
           $actprice=$result[1]/(1+$result[2]/100);
+          $items.=round($res[1],0)." ".$result[0].", ";
           echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>".number_format($actprice,2)." &#8377</td><td>".number_format($actprice*$res[1],2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($res[2]+$res[3],2)." &#8377</td></tr>";
         }
         $grand=explode(".",$rt[4]);
-
+$_SESSION['items']=$items;
          ?>
          <tr></tr><tr></tr><tr></tr>
          <tr>
@@ -188,7 +190,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
 </div></div></div><br><br>
 <?php  $_SESSION['total']=number_format($grand[0],2)." ₹";
           $_SESSION['words']=getIndianCurrency($grand[0]); ?>
-<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary">Send mail&nbsp;<i class="fa fa-paper-plane" aria-hidden="true"></i></button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()">Print Receipt&nbsp;<i class="fa fa-print" aria-hidden="true"></i></button></form></div></div></div>
+<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary" name="mail1">Send mail&nbsp;<i class="fa fa-paper-plane" aria-hidden="true"></i></button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()">Print Receipt&nbsp;<i class="fa fa-print" aria-hidden="true"></i></button></form></div></div></div>
 <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -265,5 +267,6 @@ function getIndianCurrency(float $number)
     return ($Rupees ? $Rupees . 'Rupees ' : '');
 }
 ?>
+
 </body>
 </html>
