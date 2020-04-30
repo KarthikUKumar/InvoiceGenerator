@@ -188,7 +188,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
 </div></div></div><br><br>
 <?php  $_SESSION['total']=number_format($grand[0],2)." ₹";
           $_SESSION['words']=getIndianCurrency($grand[0]); ?>
-<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Send mail</button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print Receipt</button></form></div></div></div>
+<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary">Send mail&nbsp;<i class="fa fa-paper-plane" aria-hidden="true"></i></button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()">Print Receipt&nbsp;<i class="fa fa-print" aria-hidden="true"></i></button></form></div></div></div>
 <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
