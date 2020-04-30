@@ -23,13 +23,15 @@ try
         $stmt=$pdo->prepare($sql);
         $stmt->execute([$gst,$email,md5($pw),$company,$address,$state,$country,$phone,$pin]);
         $pdo->commit();
-        echo "<script> alert(\"Account Created Successfully.\nPlease Login with your Credentials.\");
-                window.location='home.html'; </script>";
+        echo "<script> alert(\"Account Created Successfully.Please Sign In with your Credentials.\");
+                window.location='index.php'; </script>";
+        //echo 'Account created';
     }
     catch(Exception $e){
         $pdo->rollback();
-        echo "<script> alert(\"Sorry! there is an error - ".implode(',',$stmt->errorInfo())." \");
-        javascript:history.go(-1); </script>";
+        //echo "Sorry Problem Occured.";
+        echo "<script> alert(\"Sorry! there is an error!\");
+            javascript:history.go(-1); </script>";
     }       
 }
 catch(PDOException $e){
