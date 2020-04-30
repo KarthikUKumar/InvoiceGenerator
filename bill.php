@@ -175,7 +175,7 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           <td><?php echo number_format($totax/2,2); ?> &#8377</td>
           <td>SGST:</td>
           <td><?php echo number_format($totax/2,2); ?> &#8377</td>
-          <td></td>
+          <td><?php echo number_format($totax,2); ?> &#8377</td>
          </tr>
       </table></div><br>
       <div class="row">
