@@ -29,6 +29,9 @@ try
         $total=$total+($tot[$x]+$tax[$x]);	
         $x++;
 	}
+	if($total<=0){
+      echo "<script> alert(\"Please select the items!\");
+            javascript:history.go(-1); </script>";
 	try{
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pdo->beginTransaction();
