@@ -1,9 +1,11 @@
+<?php
+session_start();
+?>
 <HTML>
 <HEAD>
     <TITLE>Invoice Generator - Bill</TITLE>
 </HEAD><body>
 <?php
-session_start();
 if(isset($_SESSION["UserId"]) && isset($_SESSION["company"]) && $_SESSION["gst"]){
 try
 {
@@ -15,26 +17,28 @@ try
 	$cemail=$_POST["cmail"];
 	$cphone=$_POST["cphone"];
   $x=0;
-	foreach($_POST['chk'] as $a){
-    if($_POST[$a]==0)
-      continue;
-		$b[$x]=$_POST[$a];
-		$sql1="select price_p_item,gst,iname from Item where user_id=? and itemcode=? Limit 1";
-        $stmt1=$pdo->prepare($sql1);
-        $stmt1->execute([$uid,$a]);
-        $resw=$stmt1->fetch();
-        $actprice=$resw[0]/(1+$resw[1]/100);
-        $tot[$x]=$b[$x]*$actprice;
-        $tax[$x]=($tot[$x])*($resw[1]/100);
-        $total=$total+($tot[$x]+$tax[$x]);	
-        $x++;
-	}
-	if($total<=0){
+  if(isset($_POST['chk'])){
+    foreach($_POST['chk'] as $a){
+      if($_POST[$a]==0)
+        continue;
+		  $b[$x]=$_POST[$a];
+		  $sql1="select price_p_item,gst,iname from Item where user_id=? and itemcode=? Limit 1";
+      $stmt1=$pdo->prepare($sql1);
+      $stmt1->execute([$uid,$a]);
+      $resw=$stmt1->fetch();
+      $actprice=$resw[0]/(1+$resw[1]/100);
+      $tot[$x]=$b[$x]*$actprice;
+      $tax[$x]=($tot[$x])*($resw[1]/100);
+      $total=$total+($tot[$x]+$tax[$x]);	
+      $x++;
+	  }
+    if($total<=0){
       echo "<script> alert(\"Please select the items!\");
             javascript:history.go(-1); </script>";
-	try{
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo->beginTransaction();
+    }
+	  try{
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		  $pdo->beginTransaction();
 	    $sql="Insert into Invoice (userid,customer_name,c_email,c_phoneno,total,note) values (?,?,?,?,?,?)";
 	    $stmt=$pdo->prepare($sql);
       $stmt->execute([$uid,$cname,$cemail,$cphone,$total,$notes]);
@@ -52,17 +56,22 @@ try
         }
         $pdo->commit();
         echo "<script> window.location='bill.php'; </script>";
-  }
-  catch(PDOException $e){
-    	$pdo->rollback();
+    }
+    catch(PDOException $e){
+      $pdo->rollback();
     	echo "<script> alert(\"Sorry Something went wrong!\");
             javascript:history.go(-1); </script>";
     }
+  }
+  else{
+    echo "<script> alert(\"Please select the items!\");
+            javascript:history.go(-1); </script>";
+  }
 }
 catch(PDOException $e){
     $pdo=null;
-	echo "<script> alert(\"Connection Failed - ".$e->getMessage()." \");
-        window.location='generatebill.php'; </script>";
+	  echo "<script> alert(\"Connection Failed - ".$e->getMessage()." \");
+            window.location='generatebill.php'; </script>";
 }
 }
 else{
