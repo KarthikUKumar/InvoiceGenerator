@@ -7,14 +7,14 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   try
     { 
       $pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
-      $sql="select itemcode,iname,idesc,price_p_item,gst from Item where user_id=? and itemcode=? Limit 1";
+      $sql="select cid,c_name,cemail,phone from Customer where userid=? and cid=? Limit 1";
         $stmt=$pdo->prepare($sql);
         $stmt->execute([$uid,$id]);
         $res=$stmt->fetch();
 ?>
 <html lang="en">
   <head>
-    <title>Invoice Generator - Edit Item</title>
+    <title>Invoice Generator - Edit Customer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -41,6 +41,12 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
             </li>
            <li>
             <a href="item.php">Add Items&nbsp;
+
+
+
+
+
+
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 </a> 
            </li>
@@ -51,15 +57,13 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 </a>
             </li>
            <li>
-            <a href="customer.php">Add Customer&nbsp;
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-</a> 
-           </li>
-           <li>
-            <a href="customerview.php">View Customer&nbsp;
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-</a> 
-           </li>
+              <a href="customer.php">Add Customer&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+            <li>
+              <a href="customerview.php">View Customer&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
              
             
           </ul>
@@ -90,52 +94,25 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
           </div>
         </nav>
 
-        <h2 class="mb-4">Edit Items</h2>
+        <h2 class="mb-4">Edit Customers</h2>
         <p><div class="container">
-          <form action="edition.php" method="Post" id='editform'>
-            <div class="row">
-<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-            <div class="form-group">
-    <label for="code">SKU:</label>
-    <input type="text" class="form-control" name="code" id="code" <?php echo "value=\"$res[0]\""; ?> disabled>
-  </div>
-</div>
-<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
-<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+          <form action="custedition.php" method="Post" id='editform'>
   <div class="form-group">
-    <label for="cname">Item Name:</label>
-    <input type="text" class="form-control" name="name" id="cname" onclick="this.select()" <?php echo "value=\"$res[1]\""; ?> required>
+    <label for="cname">Customer Name:</label>
+    <input type="text" class="form-control" name="cname" id="cname" onclick="this.select()" <?php echo "value=\"$res[1]\""; ?> required>
   </div>
-</div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5"><br><br>
   <div class="form-group">
-    <label for="desc">Description:</label>
-    <textarea class="form-control" name="desc" row="9" id="desc" onclick="this.select()" form="editform" <?php echo "value=\"$res[2]\""; ?>><?php echo $res[2]; ?></textarea>
+    <label for="cmail">Customer Email:</label>
+    <input type="email" class="form-control" name="cmail" id="cmail" onclick="this.select()" <?php echo "value=\"$res[2]\""; ?> required>
   </div>
-</div><div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
-<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
   <div class="form-group">
-    <label for="price">Price Per Item:</label>
-    <input pattern="^\d*(\.\d{0,2})?$" class="form-control" name="price" id="price" onclick="this.select()" <?php echo "value=\"$res[3]\""; ?> required>
+    <label for="Phone"><b>Phone Number</b></label>
+    <input pattern="^\d*$" form="editform" class="form-control" name="phone" maxlength="10" <?php echo "value=\"$res[3]\""; ?> required>
   </div>
-<div class="form-group">
-    <label for="price">GST:</label>
-<input list="gst" name="gst" form="editform" class="form-control" id="gst">
-<datalist id="gst">
-                    <option <?php echo "value=\"$res[4]\""; ?> selected><?php echo $res[4]; ?>%</option>
-                    <OPTION value="0" class="form-control">0%</OPTION>
-                    <OPTION value="5" class="form-control">5%</OPTION>
-                    <OPTION value="12" class="form-control">12%</OPTION>
-                    <OPTION value="18" class="form-control">18%</OPTION>
-                    <OPTION value="28" class="form-control">28%</OPTION>
-                </datalist>
-              </div>
-            </div>
+  <div class="form-group">
+    <input type="text" class="form-control" name="cid" id="cid" onclick="this.select()" <?php echo "value=\"$res[0]\""; ?> hidden>
   </div>
-</div><br>
-<div class="float-right"><?php echo '<a href="itemedit.php?id='.$res[0].'" class="btn btn-danger">Reset</a>'; ?>&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary" name="sub">Submit</button></div>
+<div class="float-right"><?php echo '<a href="customeredit.php?id='.$res[0].'" class="btn btn-danger">Reset</a>'; ?>&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary" name="sub">Submit</button></div>
           </form>
         </div>
       </p>

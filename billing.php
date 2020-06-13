@@ -14,8 +14,6 @@ try
 	$total=0;
 	$notes=$_POST["notes"];
 	$cname=$_POST["cname"];
-	$cemail=$_POST["cmail"];
-	$cphone=$_POST["cphone"];
   $x=0;
   if(isset($_POST['chk'])){
     foreach($_POST['chk'] as $a){
@@ -39,9 +37,9 @@ try
 	  try{
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		  $pdo->beginTransaction();
-	    $sql="Insert into Invoice (userid,customer_name,c_email,c_phoneno,total,note) values (?,?,?,?,?,?)";
+	    $sql="Insert into Invoice (userid,customerid,total,note) values (?,?,?,?)";
 	    $stmt=$pdo->prepare($sql);
-      $stmt->execute([$uid,$cname,$cemail,$cphone,$total,$notes]);
+      $stmt->execute([$uid,$cname,$total,$notes]);
       $orderid=$pdo->lastInsertId();
       $_SESSION['orderid']=$orderid;
     	$x=0;

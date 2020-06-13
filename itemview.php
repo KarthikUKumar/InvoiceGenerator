@@ -45,6 +45,14 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
               <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
+            <li >
+              <a href="customer.php">Add Customer&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+            <li >
+              <a href="customerview.php">View Customer&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
            
              
             
@@ -94,11 +102,11 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <div class=\"input-group-prepend\"><span class=\"input-group-text\"><i class=\"fa fa-search\" aria-hidden=\"true\"></i></span></div><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"></div><br><br><table class=\"table table-hover\" id='dataTable'><CENTER><tr class=\"table table-active\"><th width=\"8%\">Sl. No.</th><th width=\"10%\">SKU</th><th width=\"20%\">Name</th><th width=\"27%\">Description</th><th width=\"13%\">Price/Item</th><th width=\"9%\">GST</th><center><th width=\"13%\">Edit</th></tr><tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
             $i++;
-            echo "<tr><td><div class=\"form-check\"><label class=\"form-check-label\"><input class=\"form-check-input\" type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\">$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".number_format($res['price_p_item'],2)." &#8377</td><td>".$res['gst']." &#37;</td><td><a class=\"btn btn-info\" href=\"itemedit.php?id=".$res['itemcode']."\">Edit <i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i></a></td></label></div></tr>";
+            echo "<tr><td><div class=\"form-check\"><label class=\"form-check-label\"><input class=\"form-check-input\" type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\">$i</td><td>".$res['itemcode']."</td><td>".$res['iname']."</td><td>".$res['idesc']."</td><td>".number_format($res['price_p_item'],2)." &#8377</td><td>".$res['gst']." &#37;</td><td><a class=\"btn btn-info\" href=\"itemedit.php?id=".$res['itemcode']."\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</a></td></label></div></tr>";
           }
           ?>
           </tbody></table></div><br><br>
-          <div class="float-right"><button type="Submit" class="btn btn-danger">Delete&nbsp;<i class="fa fa-trash" aria-hidden="true"></i></button></div>
+          <div class="float-right"><button type="Submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button></div>
           <br><br>
         </form>
 

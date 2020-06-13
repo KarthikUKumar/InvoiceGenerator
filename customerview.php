@@ -4,7 +4,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
 ?>
 <html lang="en">
   <head>
-    <title>Invoice Generator - View Bill</title>
+    <title>Invoice Generator - View Customer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -25,8 +25,8 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
                 <a href="generatebill.php">Generate Bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i>
 </a>
             </li>
-            <li class="active">
-              <a href="#">View bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
+            <li>
+              <a href="viewbill.php">View bill&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
             </li>
            <li>
             <a href="item.php">Add Items&nbsp;
@@ -45,12 +45,16 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
               <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
-           <li>
-              <a href="customer.php">Add Customers&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
+            <li>
+              <a href="customer.php">Add Customers&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
             </li>
-             <li>
-              <a href="customerview.php">View Customers&nbsp;<i class="fa fa-file-text" aria-hidden="true"></i></a>
-            </li>            
+           <li class="active">
+              <a href="#">View Customers&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+             
+            
           </ul>
 <center>
  <a href="logout.php" class="btn btn-success">Sign-out&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a>
@@ -79,55 +83,47 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
           </div>
         </nav>
 
-        <h2 class="mb-4">View Bills</h2>
+        <h2 class="mb-4">View Customers</h2>
         <p><div class="container">
   <?php
   $uid=$_SESSION['UserId'];
   $com=$_SESSION['company'];
   try
-    {
+    { 
       $pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
-      $sql="Select order_id,order_date,customerid,total from Invoice where userid=? order by order_date";
-      $stmt=$pdo->prepare($sql);
-      $stmt->execute([$uid]);
-      if($stmt->rowCount()!=0){
+      $sql="select c_name,cemail,cid,phone from Customer where userid=? Order By c_name";
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute([$uid]);
+        $i=0;
+        if($stmt->rowCount()!=0){
+          echo "<div class=\"table-responsive-md\"><div class=\"input-group mb-3\">
+    <div class=\"input-group-prepend\"><span class=\"input-group-text\"><i class=\"fa fa-search\" aria-hidden=\"true\"></i></span></div><input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search...\"></div><br><br><table class=\"table table-hover\" id='dataTable'><CENTER><tr class=\"table table-active\">
+    <th width=\"10%\">Sl. No.</th>
+    <th width=\"29%\">Customer Name</th>
+    <th width=\"20%\">Customer Email</th>
+    <th width=\"15%\">Phone Number</th>
+    <th width=\"13%\">Delete</th>
+    <th width=\"13%\">Edit</th></tr>
+    <tbody id=\"myTable\">";
+          while ($res=$stmt->fetch()){
+            $i++;
+            echo "<tr><td>".$res['cid']."</td><td>".$res['c_name']."</td><td>".$res['cemail']."</td><td>".$res['phone']."</td><td><a class=\"btn btn-info\" href=\"deletecustomer.php?id=".$res['cid']."\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Delete</a></td><td><a class=\"btn btn-info\" href=\"customeredit.php?id=".$res['cid']."\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</a></td></label></div></tr>";
+          }
+          ?>
+          </tbody></table></div><br><br>
+          <br><br>
 
-        ?>
-        <form method="POST" action="">
-          <div class="table-responsive-md"><div class="input-group mb-3">
-    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span></div>
-            <input class="form-control" id="myInput" type="text" placeholder="Search..."></div><br><br>
-            <table class="table table-hover" id="tableSelect"><thead>
-              <tr class="table table-active">
-                <th width="7%"></th>
-                <th width="13%">Invoice No.</th>
-                <th width="20%">Date</th>
-                <th width="20%">Time</th>
-                <th width="20%">Customer Name</th>
-                <th width="20%">Total Amount</th>
-              </tr></thead><tbody id="myTable">
-        <?php
-        while($row=$stmt->fetch()){
-          $rde="Select c_name from Customer where cid=? Limit 1";
-          $sny=$pdo->prepare($rde);
-          $sny->execute([$row[2]]);
-          $rwo=$sny->fetch();
-          $date=explode(" ",$row[1]);
-          echo "<tr><td><input type=\"radio\" id=\"radio1\" name=\"radio1\" value=\"$row[0]\"></td><td>$row[0]</td><td>".date("d-m-yy",strtotime($date[0]))."</td><td>".date("H:i:s",strtotime($date[1]))."</td><td>$rwo[0]</td><td>".number_format($row[3],2)." &#8377</td></div></tr>";
+          <?php
         }
-        ?>
-      </table></div>
-      <div align="right"><button type="submit" class="btn btn-primary" name="submit">View Bill</button>
-    </form>
-        <?php
-      }
-      else{
-        echo "Please a Generate a bill <a href=\"generatebill.php\">Here</a>";
-      }
+        else
+        {
+          echo "Sorrry there are no Customers here. Please add Customers of your shop. ";
+          echo "<a href='customer.php'>  Add Customers</a>";
+        }
     }
     catch(PDOException $e){
       echo "<script> alert(\"Connection Failed - \"".$e->getMessage()."\");
-        window.location='home.html'; </script>";
+        window.location='index.html'; </script>";
         $pdo=null;
     } 
     ?>
@@ -149,30 +145,24 @@ $(document).ready(function(){
     });
   });
 });
-$('#tableSelect tr').click(function(){
-    $(this).find('input[type=radio]').prop('checked', true);
-});
 </script>
-
+<script type="text/javascript">
+      $(document).ready(function() {
+    $('#dataTable tr').click(function(event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+});
+    </script>
     <?php
 }
 else{
   session_unset();
   session_destroy();
   echo "<script> alert(\"There was some internal server error.Please Login\");
-            window.location='home.html'; </script>";
+            window.location='index.html'; </script>";
 }
 ?>
   </body>
 </html>
-<?php
-if(isset($_POST['submit'])){
-if(isset($_POST['radio1'])){
-  $_SESSION['orderid']=$_POST['radio1'];
-  echo "<script> window.location='bill.php'; </script>";
-}
-else{
-  echo "<script> alert(\"Please select anyone of the bills.\"); </script>";
-}
-}
-?>

@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-    <TITLE>Invoice Generator - Add Item</TITLE>
+    <TITLE>Invoice Generator - Add Customer</TITLE>
 </HEAD><body>
 <?php
 session_start();
@@ -10,10 +10,8 @@ try
 	$pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
     $uid=$_SESSION['UserId'];
         $name=$_POST['nam'];
-        $code=$_POST['code'];
-	    $price=$_POST['price'];
-	    $desc=$_POST['desc'];
-        $gst=$_POST['gst'];
+        $email=$_POST['email'];
+	    $phone=$_POST['phone'];
         $i=0;
         $flag=1;
         try{
@@ -21,13 +19,13 @@ try
             $pdo->beginTransaction();
 	        foreach($name as $a => $b){
                 $i++;
-                $sql="Insert into Item (itemcode,user_id,iname,idesc,price_p_item,gst) values (?,?,?,?,?,?) on conflict (user_id,itemcode) do update set iname='".$name[$a]."',idesc='".$desc[$a]."',price_p_item=".$price[$a]." ,gst=".$gst[$a];  
+                $sql="Insert into Customer (c_name,cemail,phone,userid) values (?,?,?,?)";  
                 $stmt=$pdo->prepare($sql);
-                $stmt->execute([$code[$a],$uid,$name[$a],$desc[$a],$price[$a],(int)$gst[$a]]);
+                $stmt->execute([$name[$a],$email[$a],$phone[$a],$uid]);
             }
             $pdo->commit();
                 echo "<script> alert(\"Inserted ".($a+1)." Items Successfully\");
-                        window.location='itemview.php'; </script>";
+                        window.location='customerview.php'; </script>";
            /* }
             elseif ($a==0) {
                 echo "<script> alert(\"Modified $i Items Successfully\");

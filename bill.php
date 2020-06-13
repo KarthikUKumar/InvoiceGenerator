@@ -49,7 +49,15 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"]) && $_SESSION["gst"]
               <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
-           
+           <li>
+              <a href="customer.php">Add Customers&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+              <li>
+              <a href="customerview.php">View Customers&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+            
              
             
           </ul>
@@ -86,18 +94,24 @@ $orderid=$_SESSION['orderid'];
 $totax=0;
 try{
   $pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
-$some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice where order_id=? limit 1";
+$some="Select order_date,customerid,total from Invoice where order_id=? limit 1";
+$sme="Select c_name,cemail,phone from customer where cid=?";
         $snt=$pdo->prepare($some);
         $snt->execute([$orderid]);
         if($snt->rowCount()!=0){
           $rt=$snt->fetch();
-          $email=$rt[2];
+          $cid=$rt[1];
+          $edr=$pdo->prepare($sme);
+          $edr->execute([$cid]);
           $dt=explode(" ",$rt[0]);
           $date=date("d-m-yy",strtotime($dt[0]));
           $time=date("H:i:s",strtotime($dt[1]));
-          $_SESSION['customermail']=$rt[2];
+          if($edr->rowCount()!=0){
+            $gty=$edr->fetch();
+            $email=$gty[1];
+            $_SESSION['customermail']=$gty[1];
         ?>
-        <div id="Print_Table" class="print1"> 
+        <div id="Print_Table">
 <div class="container special" style="border:4px double black;">
   <div class="container-fluid" style="border-bottom:1px solid black;"><br>
     <center><h5>TAX INVOICE</h5></center>
@@ -119,9 +133,9 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
   <div class="container-fluid" style="border-bottom:1px solid black;">
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
-      <div class="float:left">Customer Name: <?php echo $rt[1]; ?></div>
-      <div class="float:left">Customer Phone Number: +91 <?php echo $rt[3]; ?></div>
-      <div class="float:left">Customer Email: <?php echo $rt[2]; ?></div><br>
+      <div class="float:left">Customer Name: <?php echo $gty[0]; ?></div>
+      <div class="float:left">Customer Phone Number: +91 <?php echo $gty[2]; ?></div>
+      <div class="float:left">Customer Email: <?php echo $gty[1]; ?></div><br>
     </div>
   </div></div>
   <div class="container-fluid"><br>
@@ -143,7 +157,6 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
         $l=0;
         $sql="Select itemcode,quantity,total_amt,tax_amt from Order_Item where Order_Id=?";
         $stmt=$pdo->prepare($sql);
-        $items="";
         $stmt->execute([$orderid]);
         while($res=$stmt->fetch()){
           $l++;
@@ -153,11 +166,10 @@ $some="Select order_date,customer_name,c_email,c_phoneno,total from Invoice wher
           $smt->execute([$res[0]]);
           $result=$smt->fetch();
           $actprice=$result[1]/(1+$result[2]/100);
-          $items.=round($res[1],0)." ".$result[0].", ";
           echo "<tr><td>$l</td><td>$result[0]</td><td>$res[1]</td><td>".number_format($actprice,2)." &#8377</td><td>".number_format($actprice*$res[1],2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($result[2]/2,2)."</td><td>".number_format($res[3]/2,2)." &#8377</td><td>".number_format($res[2]+$res[3],2)." &#8377</td></tr>";
         }
-        $grand=explode(".",$rt[4]);
-$_SESSION['items']=$items;
+        $grand=explode(".",$rt[2]);
+
          ?>
          <tr></tr><tr></tr><tr></tr>
          <tr>
@@ -177,7 +189,7 @@ $_SESSION['items']=$items;
           <td><?php echo number_format($totax/2,2); ?> &#8377</td>
           <td>SGST:</td>
           <td><?php echo number_format($totax/2,2); ?> &#8377</td>
-          <td><?php echo number_format($totax,2); ?> &#8377</td>
+          <td>$totax</td>
          </tr>
       </table></div><br>
       <div class="row">
@@ -190,7 +202,7 @@ $_SESSION['items']=$items;
 </div></div></div><br><br>
 <?php  $_SESSION['total']=number_format($grand[0],2)." ₹";
           $_SESSION['words']=getIndianCurrency($grand[0]); ?>
-<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary" name="mail1">Send mail&nbsp;<i class="fa fa-paper-plane" aria-hidden="true"></i></button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()">Print Receipt&nbsp;<i class="fa fa-print" aria-hidden="true"></i></button></form></div></div></div>
+<div class="float-right"><form action="mailto.php" method="POST"><button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Send mail</button>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="print()"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print Receipt</button></form></div></div></div>
 <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -210,6 +222,7 @@ $_SESSION['items']=$items;
     </script>
     <script src="js/main.js"></script>
 <?php
+}
 }
 else{
   unset($_SESSION['orderid']);
@@ -267,6 +280,5 @@ function getIndianCurrency(float $number)
     return ($Rupees ? $Rupees . 'Rupees ' : '');
 }
 ?>
-
 </body>
 </html>

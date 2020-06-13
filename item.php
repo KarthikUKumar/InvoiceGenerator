@@ -46,6 +46,14 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
               <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
+            <li>
+              <a href="customer.php">Add Customer&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+            <li>
+              <a href="customerview.php">View Customer&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
            
              
             

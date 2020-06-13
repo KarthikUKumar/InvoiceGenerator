@@ -12,7 +12,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
-   
+    
   </head>
   <body>
     
@@ -46,7 +46,14 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
               <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
-           
+            <li>
+              <a href="customer.php">Add Customers&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
+           <li>
+              <a href="customerview.php">View Customers&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
+</a>
+            </li>
              
             
           </ul>
@@ -84,24 +91,26 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   try
     {
       $pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
+      $dsw="select cid,c_name,cemail from Customer where userid=?";
       $sql="select itemcode,iname,price_p_item,gst from Item where user_id=? Order By iname";
-        $stmt=$pdo->prepare($sql);
-        $stmt->execute([$uid]);
+      $stu=$pdo->prepare($dsw);
+      $stu->execute([$uid]);
         ?>
     <div class="container">
     <form id="from1" action="billing.php" method="post">
       <div class="form-group">
-    <label for="cname">Customer Name:</label>
-    <input type="text" class="form-control" placeholder="Enter name" name="cname" id="cname" required>
+    <label for="cname">Select Customer:</label>
+    <SELECT name="cname" form="from1" class="form-control">
+      <?php
+    while ($reu=$stu->fetch()){
+      ?>
+      <OPTION value="<?php echo $reu['cid']; ?>" class="form-control"><?php echo $reu['c_name']." - ".$reu['cemail']; ?></OPTION>
+      <?php
+    }
+    ?>
+  </SELECT>
   </div>
-  <div class="form-group">
-    <label for="cmail">Customer email:</label>
-    <input type="email" class="form-control" placeholder="Enter email" name="cmail" id="cmail">
-  </div>
-  <div class="form-group">
-    <label for="cphone">Customer Phone Number:</label>
-    <input pattern="^\d*$" maxlength="10" class="form-control" placeholder="Enter phone number" name="cphone" form="from1" required>
-  </div><br>
+  <br>
   <div class="table-responsive-md"><div class="input-group mb-3">
     <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span></div>
     <input class="form-control" id="myInput" type="text" placeholder="Search..."></div><br><br>
@@ -115,6 +124,8 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
             <th width="20%">Quantity</th> 
         </tr></thead><tbody id="myTable">
           <?php 
+          $stmt=$pdo->prepare($sql);
+          $stmt->execute([$uid]);
           if($stmt->rowCount()!=0){
             while ($res=$stmt->fetch()){
               echo "<tr><td><div class=\"form-check\"><label class=\"form-check-label\"><input class=\"form-check-input\" type=\"checkbox\" name=\"chk[]\" value=\"$res[0]\"></TD><td>$res[0]</td><TD>$res[1]</td><td>&#8377 $res[2]</td><td>$res[3] &#37;</td><td><input pattern=\"^\d*(\.\d{0,2})?$\" name=\"$res[0]\" onclick=\"this.select();\" value=\"0\" class=\"form-control\" form=\"from1\"></td></label></div></tr>";
@@ -124,24 +135,26 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     </TABLE>
   </div>
 <div class="row">
-          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-7">
+          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
           <h5>Notes: </h5>
           <div class="form-group">
-            <textarea class="form-control txt" rows="2" cols="4" name="notes" placeholder="Your Notes"></textarea>
+            <textarea class="form-control txt" rows="3" cols="4" name="notes" placeholder="Your Notes"></textarea>
           </div></div>
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-5"></div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          </div>
         </div>
         <div class="row">
           <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
           </div>
       <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-    <div class="float-right"><button type="submit" class="btn btn-md btn btn-success" >Generate Bill</button></div></div></div>
+    <div class="float-right"><button type="submit" id="sub" class="btn btn-md btn btn-success" >Generate Bill</button></div></div></div>
   </form>
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+
       <script>
 $(document).ready(function(){
   $("#myInput").on("keyup", function() {
@@ -163,9 +176,7 @@ $(document).ready(function(){
       input.val(oldVal); 
     }
   }, 0);
-});
-
-</script>
+});</script>
  <script type="text/javascript">
       $(document).ready(function() {
     $('#dataTable tr').click(function(event) {
@@ -174,7 +185,28 @@ $(document).ready(function(){
         }
     });
 });
-    </script> 
+    </script>
+    <script>
+    	$(document).ready(function(){
+    		var sub=0;
+    		var tax=0;
+    		var grand=0;
+    		$("#sub").on('click',function(){
+    				var currentrow=$(this).closest('tr');
+    				var p=currentrow.find("td:eq(3)").text();
+    				var g=currentrow.find("td:eq(4)").text();
+    				var q=currentrow.find("td:eq(5)").val();
+    				grand+=parseInt(p)*parseInt(q);
+    				var x=parseInt(g)/100;
+    				var y=(parseInt(p)/(x+1));
+    				sub+=y*parseInt(q);
+    				tax+=(grand-sub);
+    				$("#sub").html(sub);
+    				$("#tax").html(tax);
+    				$("#grand").html(grand);
+    		})
+    	})
+    </script>
 <?php
 }
           else{
