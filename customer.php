@@ -40,7 +40,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
               <a href="itemview.php">View Item&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>
 </a>
             </li>
-<li class="acive">
+<li class="active">
             <a href="#">Add Customer&nbsp;
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 </a> 
