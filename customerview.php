@@ -103,11 +103,11 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <th width=\"29%\">Customer Name</th>
     <th width=\"20%\">Customer Email</th>
     <th width=\"15%\">Phone Number</th>
-    <th width=\"13%\">Delete</th>
-    <th width=\"13%\">Edit</th></tr>
+    <th width=\"13%\">Edit</th>
+    <th width=\"13%\">Delete</th></tr>
     <tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
-            echo "<tr><td>".++$i."</td><td>".$res['c_name']."</td><td>".$res['cemail']."</td><td>".$res['phone']."</td><td><a class=\"btn btn-info\" href=\"deletecustomer.php?id=".$res['cid']."\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Delete</a></td><td><a class=\"btn btn-info\" href=\"customeredit.php?id=".$res['cid']."\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</a></td></label></div></tr>";
+            echo "<tr><td>".++$i."</td><td>".$res['c_name']."</td><td>".$res['cemail']."</td><td>".$res['phone']."</td><td><a class=\"btn btn-info\" href=\"customeredit.php?id=".$res['cid']."\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</a></td><td><a class=\"btn btn-danger\" href=\"deletecustomer.php?id=".$res['cid']."\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Delete</a></td></label></div></tr>";
           }
           ?>
           </tbody></table></div><br><br>
