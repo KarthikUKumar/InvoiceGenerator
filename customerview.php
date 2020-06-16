@@ -88,6 +88,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
   <?php
   $uid=$_SESSION['UserId'];
   $com=$_SESSION['company'];
+  $i=0;
   try
     { 
       $pdo=new PDO("pgsql:host=ec2-23-22-156-110.compute-1.amazonaws.com;port=5432;dbname=dc71h5v4qsc5iq","dmnsyiybmedxbz","943ba26baf8eb1c6c0898f6e8771e492807a6ed312e5351c7c8d54806ac000c0");
@@ -106,8 +107,7 @@ if(isset($_SESSION["UserId"]) && isset($_SESSION["company"])){
     <th width=\"13%\">Edit</th></tr>
     <tbody id=\"myTable\">";
           while ($res=$stmt->fetch()){
-            $i++;
-            echo "<tr><td>".$res['cid']."</td><td>".$res['c_name']."</td><td>".$res['cemail']."</td><td>".$res['phone']."</td><td><a class=\"btn btn-info\" href=\"deletecustomer.php?id=".$res['cid']."\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Delete</a></td><td><a class=\"btn btn-info\" href=\"customeredit.php?id=".$res['cid']."\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</a></td></label></div></tr>";
+            echo "<tr><td>".++$i."</td><td>".$res['c_name']."</td><td>".$res['cemail']."</td><td>".$res['phone']."</td><td><a class=\"btn btn-info\" href=\"deletecustomer.php?id=".$res['cid']."\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i> Delete</a></td><td><a class=\"btn btn-info\" href=\"customeredit.php?id=".$res['cid']."\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</a></td></label></div></tr>";
           }
           ?>
           </tbody></table></div><br><br>
