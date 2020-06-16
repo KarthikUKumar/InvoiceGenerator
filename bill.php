@@ -189,7 +189,7 @@ $sme="Select c_name,cemail,phone from customer where cid=?";
           <td><?php echo number_format($totax/2,2); ?> &#8377</td>
           <td>SGST:</td>
           <td><?php echo number_format($totax/2,2); ?> &#8377</td>
-          <td>$totax</td>
+          <td><?php echo number_format($totax,2); ?> &#8377</td>
          </tr>
       </table></div><br>
       <div class="row">
